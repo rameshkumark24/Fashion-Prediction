@@ -1,100 +1,138 @@
-Fashion Product Recommendation System
+# 👗 Fashion Product Recommendation System
 
-Overview
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
+![ML](https://img.shields.io/badge/Model-ResNet50-orange)
+![Status](https://img.shields.io/badge/Status-Completed-green)
 
-This project implements a Fashion Product Recommendation System using a Convolutional Neural Network (CNN) based on the pre-trained ResNet50 model. The system extracts features from a dataset of 44,000 fashion product images and uses the Nearest Neighbors algorithm to recommend similar products based on Euclidean distance. The project also includes a web application for deploying the recommendation system.
+## 📌 Overview
+This project implements a **Fashion Product Recommendation System** using a Convolutional Neural Network (CNN). It utilizes the pre-trained **ResNet50** model to extract features from a dataset of 44,000 fashion product images and uses the **Nearest Neighbors** algorithm to recommend similar products based on Euclidean distance.
 
-The workflow involves:
+The project includes an interactive web application built with **Streamlit**, allowing users to upload an image and receive visually similar fashion recommendations instantly.
 
+### 🚀 Key Features
+* **Deep Learning Feature Extraction:** Uses ResNet50 (trained on ImageNet) to generate embeddings for fashion items.
+* **Similarity Search:** Utilizes k-Nearest Neighbors (k-NN) to find the closest matches in the vector space.
+* **Interactive UI:** A user-friendly Streamlit web interface for easy image uploading and recommendation visualization.
 
-Extracting features from images using ResNet50.
+---
 
+## 📂 Dataset
+The dataset consists of **44,000 fashion product images** sourced from Kaggle.
+* **Source:** [Fashion Product Images Dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-dataset)
+* **Preprocessing:** All images are resized to `224x224` pixels to match the input requirements of ResNet50.
 
-Using Nearest Neighbors to find similar images.
+> **Note:** Due to the large size of the dataset, images are not hosted in this repository. You must download them locally to run the project.
 
+---
 
-Deploying the model as a web app for user interaction.
+## 🛠️ Tech Stack & Prerequisites
+Ensure you have **Python 3.8+** installed. The project relies on the following libraries:
 
-Dataset
+* **Deep Learning:** `tensorflow`, `keras`
+* **Computer Vision:** `pillow`, `opencv-python`
+* **Machine Learning:** `scikit-learn`, `numpy`, `pandas`
+* **Web Framework:** `streamlit`
 
-The dataset used in this project consists of 44,000 fashion product images sourced from Kaggle.
+### Install Dependencies
+Create a `requirements.txt` file and run:
+```bash
+pip install -r requirements.txt
 
-Link: Fashion Product Images Dataset
+```
 
-The images are resized to 224x224 pixels to match the input requirements of ResNet50.
+*Recommended `requirements.txt` content:*
 
-Prerequisites
+```text
+streamlit
+tensorflow
+scikit-learn
+numpy
+pillow
+tqdm
 
-Ensure you have the following installed:
+```
 
-Python 3.8+
+---
 
-Required Python libraries (listed below)
+## 🧠 Model Details
 
-Model Details
+### 1. Feature Extractor (ResNet50)
 
-ResNet50: A pre-trained CNN model from TensorFlow, used for feature extraction.
+* **Architecture:** ResNet50 (pre-trained on ImageNet).
+* **Input Shape:** `(224, 224, 3)`
+* **Modifications:** The top classification layer is removed (`include_top=False`), and a `GlobalMaxPool2D` layer is added to reduce feature dimensions to a 1D vector.
+* **Output:** A high-dimensional feature vector representing the visual style of the image.
 
-Weights: imagenet
+### 2. Similarity Search (Nearest Neighbors)
 
-Top layer removed (include_top=False)
+* **Algorithm:** Brute-force Search
+* **Metric:** Euclidean Distance
+* **Neighbors:** Returns top 5-6 most similar images.
 
-Input shape: (224, 224, 3)
+---
 
-Additional layer: GlobalMaxPool2D to reduce feature dimensions.
+## ⚙️ How to Run Locally
 
-Nearest Neighbors: Uses sklearn.neighbors.NearestNeighbors with:
+Since this project requires the full image dataset, it is designed for **local execution**.
 
-n_neighbors=6
+### Step 1: Clone the Repository
 
-Algorithm: brute
+```bash
+git clone [https://github.com/your-username/fashion-recommendation-system.git](https://github.com/your-username/fashion-recommendation-system.git)
+cd fashion-recommendation-system
 
-Metric: euclidean
+```
 
-How It Works
+### Step 2: Setup Data
 
-Feature Extraction:
+1. Download the **Fashion Product Images Dataset** from Kaggle.
+2. Extract the images into a folder named `images/` inside the project directory.
+3. Ensure you have the pre-computed feature files: `Images_features.pkl` and `filenames.pkl`. (If not, run the training script to generate them).
 
-Images are resized to 224x224 and preprocessed using preprocess_input.
+### Step 3: Run the App
 
-ResNet50 extracts feature vectors, which are flattened and normalized.
+Execute the Streamlit application:
 
-Recommendation:
+```bash
+streamlit run app.py
 
-Normalized features are fed into the Nearest Neighbors algorithm to find the top 6 similar images based on Euclidean distance.
+```
 
-Web App:
+### Step 4: Use the App
 
-Users upload an image, and the system recommends visually similar fashion products.
+1. A web interface will open in your browser (usually at `http://localhost:8501`).
+2. Upload an image of a shirt, shoe, or accessory.
+3. The system will display the **Top 5 Recommended Products** from the database.
 
-Deployment
+---
 
-The web app is built using a framework like Flask or Streamlit (modify based on your implementation).
+## 📸 Workflow
 
-To deploy:
+1. **User Upload:** User uploads an image via the Streamlit UI.
+2. **Preprocessing:** Image is resized and normalized.
+3. **Feature Extraction:** ResNet50 converts the image into a numeric vector.
+4. **Retrieval:** k-NN finds the nearest vectors in the database.
+5. **Display:** The corresponding images for those vectors are shown to the user.
 
-Ensure all dependencies are installed.
+---
 
-Run app.py and access the app via a web browser.
+## 🤝 Contributing
 
-For production, consider deploying on platforms like Heroku, AWS, or Vercel.
+Contributions are welcome! Please fork the repository and submit a pull request.
 
-References
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Dataset: Kaggle Fashion Product Images
+## 📄 License
 
-Code Inspiration: Google Drive Link
+This project is licensed under the MIT License. See the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
-Libraries: TensorFlow, scikit-learn, NumPy, Pillow
+## 🔗 References
 
-Contributing
+* Dataset: [Kaggle Fashion Product Images](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-dataset)
+* Libraries: TensorFlow, Scikit-learn, Streamlit
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-
-
-A web browser for running the web application
